@@ -16,8 +16,8 @@ public class LevelsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ShowLevels();
         selectImg = GameObject.FindWithTag("Select").transform;
+        ShowLevels();
     }
 
     // Update is called once per frame
@@ -28,6 +28,8 @@ public class LevelsController : MonoBehaviour
     //展示等级
     public void ShowLevels()
     {
+        nextLevel = LevelsSingleton.GetInstance().LevelsStars.Count + 2;
+        OnClickLevelButton(LevelsSingleton.GetInstance().LevelsStars.Count);
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -41,6 +43,18 @@ public class LevelsController : MonoBehaviour
             {
                 levelText.color = lockLevelColor;
             }
+            //星星显示
+            Transform StarNode = child.Find("StarNode");
+            if (isUnLock)
+            {
+                StarNode.gameObject.SetActive(true);
+                int stars = LevelsSingleton.GetInstance().GetLevelStarFromData(i);
+                Debug.Log(i+"--"+stars);
+                for (int j = 0; j < StarNode.childCount; j++)
+                {
+                    StarNode.GetChild(j).gameObject.SetActive(stars>=j+1);
+                }
+            }
         }
     }
     //点击按钮 level从0开始
@@ -51,6 +65,8 @@ public class LevelsController : MonoBehaviour
         (selectImg as RectTransform).anchoredPosition = Vector3.zero;
         //调整z轴 设置在兄弟对象中的顺序
         selectImg.SetSiblingIndex(0);
+        //存储关卡
+        LevelsSingleton.GetInstance().CurrentLevel = level;
     }
     //进入关卡
     public void OnClickEnterGame()
