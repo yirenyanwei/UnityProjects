@@ -10,11 +10,14 @@ public class PlayerNavMeshAgent : MonoBehaviour
     private NavMeshAgent nav;
 
     private NavMeshPath path;
+
+    private LineRenderer line;
     // Start is called before the first frame update
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
+        line = GetComponent<LineRenderer>();
         
         //预估到目的地，并返回路径
         bool canArrive = nav.CalculatePath(Target.position, path);
@@ -32,7 +35,16 @@ public class PlayerNavMeshAgent : MonoBehaviour
             Debug.DrawLine(corners[i], corners[i + 1], Color.black);
         }
         Debug.Log("distance:"+distance);
-
+        //lineRender画线
+        line.positionCount = corners.Length;
+        for (int i = 0; i < corners.Length; i++)
+        {
+            Debug.Log(corners[i]);
+            line.SetPosition(i, corners[i]);
+        }
+        
+        //导航的层剔除 所选层2的次幂的和
+        Debug.Log("areaMask:"+nav.areaMask);
     }
 
     // Update is called once per frame
