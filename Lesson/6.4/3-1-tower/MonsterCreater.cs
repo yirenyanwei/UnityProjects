@@ -19,6 +19,8 @@ public class MonsterWave
     public float MonsterHP;
     [Header("怪物移动速度")]
     public float MonsterNavSpeed;
+    [Header("怪物的价值")]
+    public int collectValue = 100;
 }
 public class MonsterCreater : MonoBehaviour
 {
@@ -68,7 +70,7 @@ public class MonsterCreater : MonoBehaviour
                     //生成怪物
                     GameObject currMonster = Instantiate(wave.MonsterPrefab, startTransform.position, Quaternion.identity);
                     //初始化monster
-                    currMonster.GetComponent<Monster>().InitMonster(wave.MonsterNavSpeed, wave.MonsterHP, endTransform.position);
+                    currMonster.GetComponent<Monster>().InitMonster(wave.MonsterNavSpeed, wave.MonsterHP, endTransform.position, wave.collectValue);
             
                     counter++;
                     monsterTimer = 0;

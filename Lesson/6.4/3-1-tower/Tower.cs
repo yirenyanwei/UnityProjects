@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    [Header("花费金币")]
+    public int costMoney = 100;
     [Header("炮塔主体")]
     public Transform turret;
     [Header("旋转速度")]

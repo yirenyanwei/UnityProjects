@@ -16,6 +16,8 @@ public class Monster : MonoBehaviour
     private CapsuleCollider collider;
     //死亡事件
     public Action<Monster> deathEvent;
+    //怪物的价值
+    private int collectValue = 100;
     //初始化怪物
     private void Awake()
     {
@@ -29,10 +31,11 @@ public class Monster : MonoBehaviour
     {
         
     }
-    public void InitMonster(float moveSpeed, float hp, Vector3 des)
+    public void InitMonster(float moveSpeed, float hp, Vector3 des, int collectValue)
     {
         nav.speed = moveSpeed;
         MonsterHP = hp;
+        this.collectValue = collectValue;
         nav.SetDestination(des);
     }
 
@@ -59,6 +62,9 @@ public class Monster : MonoBehaviour
                 deathEvent(this);
             }
             Destroy(gameObject, 1.8f);
+            
+            //加钱
+            TowerBuyer.instance.UpdateMoney(collectValue);
         }
     }
 
