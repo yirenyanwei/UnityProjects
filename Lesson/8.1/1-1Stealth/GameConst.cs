@@ -10,6 +10,7 @@ public class GameConst
     public const string ALARMLIGHT = "AlarmLight";
     public const string SIREN = "Siren";
     public const string PLAYER = "Player";
+    public const string ENEMY = "Enemy";
 
     #endregion
 
@@ -19,6 +20,7 @@ public class GameConst
     public const string VERTICAL = "Vertical";
     public const string SNEAK = "Sneak";
     public const string SHOUT = "Shout";
+    public const string SWITCH = "Switch";
 
     #endregion
 
@@ -28,6 +30,7 @@ public class GameConst
     public static int SNEAK_PARAM = Animator.StringToHash("Sneak");
     public static int SHOUT_PARAM = Animator.StringToHash("Shout");
     public static int LOCOMOTION_STATE = Animator.StringToHash("Locomotion");
+    public static int DOOROPEN_PARAM = Animator.StringToHash("DoorOpen");
     #endregion
 
     #region Static Constructor
