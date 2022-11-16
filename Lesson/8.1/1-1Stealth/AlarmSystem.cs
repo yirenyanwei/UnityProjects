@@ -10,7 +10,7 @@ public class AlarmSystem : MonoBehaviour
     public float turnSpeed = 3;
     // [HideInInspector]
     public Vector3 alarmPosition = new Vector3(1000, 1000, 1000);
-    private Vector3 safePosition = new Vector3(1000, 1000, 1000);
+    public Vector3 safePosition = new Vector3(1000, 1000, 1000);
     //警报灯
     private AlarmLight alarmLight;
     //住灯光

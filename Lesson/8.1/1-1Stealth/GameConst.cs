@@ -31,6 +31,7 @@ public class GameConst
     public static int SHOUT_PARAM = Animator.StringToHash("Shout");
     public static int LOCOMOTION_STATE = Animator.StringToHash("Locomotion");
     public static int DOOROPEN_PARAM = Animator.StringToHash("DoorOpen");
+    public static int ANGULARSPEED_PARAM = Animator.StringToHash("AngularSpeed");
     #endregion
 
     #region Static Constructor
@@ -45,7 +46,8 @@ public class GameConst
 
     #region Game Params
 
-    public const float WATCH_OFFSET = 0f;
+    public const float WATCH_OFFSET = 0f; //头顶观察距离的偏移
+    public const float PLAYER_EYES_OFFSET = 1.8f; //眼睛的高度
 
     #endregion
 }

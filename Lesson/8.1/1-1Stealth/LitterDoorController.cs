@@ -17,6 +17,11 @@ public class LitterDoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger)
+        {
+            //解决机器人碰撞体太大的bug
+            return;
+        }
         if (other.CompareTag(GameConst.PLAYER) || other.CompareTag(GameConst.ENEMY))
         {
             counter++;
@@ -33,6 +38,11 @@ public class LitterDoorController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.isTrigger)
+        {
+            //解决机器人碰撞体太大的bug
+            return;
+        }
         if (other.CompareTag(GameConst.PLAYER) || other.CompareTag(GameConst.ENEMY))
         {
             counter--;
