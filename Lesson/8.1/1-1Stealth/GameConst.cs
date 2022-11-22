@@ -32,6 +32,10 @@ public class GameConst
     public static int LOCOMOTION_STATE = Animator.StringToHash("Locomotion");
     public static int DOOROPEN_PARAM = Animator.StringToHash("DoorOpen");
     public static int ANGULARSPEED_PARAM = Animator.StringToHash("AngularSpeed");
+    public static int PLAYERINSIGHT_PARAM = Animator.StringToHash("PlayerInSight");
+    public static int WEAPONSHOOT_STATE = Animator.StringToHash("WeaponShoot");
+    public static int WEAPONRAISE_STATE = Animator.StringToHash("WeaponRaise");
+    public static int DEAD_PARAM = Animator.StringToHash("Dead");
     #endregion
 
     #region Static Constructor
@@ -48,6 +52,8 @@ public class GameConst
 
     public const float WATCH_OFFSET = 0f; //头顶观察距离的偏移
     public const float PLAYER_EYES_OFFSET = 1.8f; //眼睛的高度
+    public const float PLAYER_BODY_OFFSET = 1.0f;//身体的高度
+    public const float PLAYER_HURT_OFFSET = 1.5f;//受伤害的高度
 
     #endregion
 }

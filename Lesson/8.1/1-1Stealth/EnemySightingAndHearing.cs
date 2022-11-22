@@ -11,15 +11,18 @@ public class EnemySightingAndHearing : MonoBehaviour
 {
     [Header("机器人视野角度")]
     public float fieldOfView = 110;
-    //私人警报位置  在外边也能看到
-    [SerializeField]
-    private Vector3 personAlarmPosition;
+    [HideInInspector]
+    public bool playerInSight = false;//玩家是否在视野范围内
+    //私人警报位置
+    public Vector3 personAlarmPosition;
     //上一帧的全局警报位置
     private Vector3 previousAlarmPosition;
     //机器人指向玩家的方向向量
     private Vector3 dir;
     //玩家
     private Transform player;
+
+    private PlayerHealth playerHealth;
     //玩家动画
     private Animator playerAni;
     //射线
@@ -44,6 +47,7 @@ public class EnemySightingAndHearing : MonoBehaviour
         previousAlarmPosition = AlarmSystem.Instance.safePosition;
         personAlarmPosition = AlarmSystem.Instance.safePosition;
         player = PlayerBag.instance.transform;
+        playerHealth = player.GetComponent<PlayerHealth>();
         playerAni = player.GetComponent<Animator>();
     }
 
@@ -65,6 +69,7 @@ public class EnemySightingAndHearing : MonoBehaviour
     //视觉  1、角度 2、距离 3、障碍物 
     void Sighting()
     {
+        playerInSight = false;
         dir = player.position - transform.position;
         //机器人到玩家的向量与机器人正前方的夹角
         float angle = Vector3.Angle(dir, transform.forward);
@@ -76,9 +81,10 @@ public class EnemySightingAndHearing : MonoBehaviour
         if (Physics.Raycast(transform.position+Vector3.up*GameConst.PLAYER_EYES_OFFSET, 
                 dir, out hit))
         {
-            //检测到玩家
+            //检测到玩家  也会检测到自己，把自己的collier调小点
             if (hit.collider.CompareTag(GameConst.PLAYER))
             {
+                playerInSight = true;
                 //触发警报
                 AlarmSystem.Instance.alarmPosition = player.position;
             }
@@ -98,6 +104,11 @@ public class EnemySightingAndHearing : MonoBehaviour
         }
         //导航方式找玩家
         bool canArrive = nav.CalculatePath(player.position, path);
+        if (path.status == NavMeshPathStatus.PathPartial)
+        {
+            //有动态路障到不了
+            // return;
+        }
         if (!canArrive)
         {
             return;
@@ -125,11 +136,25 @@ public class EnemySightingAndHearing : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        //玩家死亡不检测
+        if (playerHealth.playerHP<=0)
+        {
+            return;
+        }
         if (other.CompareTag(GameConst.PLAYER))
         {
             //当玩家进入触发器才判断
             Sighting();
             Hearing();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(GameConst.PLAYER))
+        {
+            //玩家离开了
+            playerInSight = false;
         }
     }
 }

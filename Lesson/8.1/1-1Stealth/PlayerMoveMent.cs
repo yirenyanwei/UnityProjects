@@ -21,11 +21,14 @@ public class PlayerMoveMent : MonoBehaviour
     //方向向量
     private Vector3 dir;
     private Quaternion targetQua;
+    //玩家血量
+    private PlayerHealth playerHealth;
     private void Awake()
     {
         ani = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
         dir = Vector3.zero;
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     // Start is called before the first frame update
@@ -37,6 +40,12 @@ public class PlayerMoveMent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //玩家死亡，收回控制权
+        if (playerHealth.playerHP<=0)
+        {
+            return;
+        }
+        
         //虚拟按键、虚拟轴
         hor = Input.GetAxis(GameConst.HORIZONTAL);
         ver = Input.GetAxis(GameConst.VERTICAL);
